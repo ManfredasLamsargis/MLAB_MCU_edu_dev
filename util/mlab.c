@@ -1,5 +1,5 @@
 #include <stdio.h>
 
 void mlab_greet() {
-    printf("MLAB");
+    printf("MLAB\n");
 }
