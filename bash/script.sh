@@ -66,11 +66,17 @@ cd src
 # lets create file for remote library
 touch mlab.c
 
+# see if the file is created
+ls
+
 # install curl (Client URL)
 sudo apt install curl -y
 
 # download using curl
 curl -o mlab.c https://raw.githubusercontent.com/ManfredasLamsargis/MLAB_MCU_edu_dev/main/util/mlab.c
+
+# see the contents of downloaded file
+cat mlab.c
 
 # rename main.c to main_v1.c for versioning
 mv main.c main_v1.c
@@ -84,13 +90,16 @@ cp main_v1.c main_v2.c
 # see the source files
 ls
 
-# see the contents of downloaded file
+# see what function to use in the second version
 cat mlab.c
 
 # copy function name using Ctrl+Shift+C command from the terminal
 
 # edit the second version
 nano main_v2.c
+
+# check if the changes are saved
+head main_v2.c
 
 # compile the program
 gcc mlab.c main_v2.c -o ../build/program
@@ -130,6 +139,15 @@ date
 
 # see the manual
 man date
+
+# see pattern of the day format
+man date | grep day
+
+# see pattern of the month format
+man date | grep month
+
+# see pattern of the year format
+man date | grep year
 
 # output formatted date (like normal Europiens)
 date +%d.%m.%y
@@ -176,9 +194,6 @@ ls -l
 # execute program
 ./program
 
-# check Experimental Project's structure
-tree
-
 # lets go the original Project's source
 cd ../project/src/
 
@@ -206,5 +221,120 @@ rm -r project/ experimental_project/
 # check if it is deleted
 ls
 
-# exit the environment
+# lets create bash script
+touch script.sh
+
+# add witch shell to use, use '' to avoid bash interpreting '!' sign
+echo '#!/bin/bash' > script.sh
+
+# edit script to automate the whole process
+nano script.sh
+
+# check if the end of script is the 'cd ..'
+tail script.sh
+
+# try running script
+./script.sh
+
+# check if the script is executable
+ls -l
+
+# make script executable
+chmod +x script.sh
+
+# check if now the script has execute permissions or not
+ls -l
+
+# execute script
+./script.sh
+
+# check current state
+tree
+
+# Should look like this:
+# .
+# |-- experimental_project
+# |   |-- program -> ../project/build/program
+# |   `-- src -> ../project/src/
+# |-- project
+# |   |-- build
+# |   |   `-- program
+# |   |-- readme.md
+# |   `-- src
+# |       |-- main_v1.c
+# |       |-- main_v2.c
+# |       `-- mlab.c
+# `-- script.sh
+
+# let's install tmux for better multitasking
+sudo apt install tmux -y
+
+# start tmux session
+tmux
+
+# make new tile bellow (Ctrl+B + ")
+
+# go tile up (Ctrl+B + Arrow Up)
+
+# make tile to the side (Ctrl+B + %)
+
+# resize tiles (Hold Ctrl+B + Pressing Arrow Keys)
+
+# make one project
+mkdir root_project && mv project/ experimental_project/ script.sh root_project/ && cd root_project/
+
+# search for readme.md file
+find . -name "readme.md"
+
+# find all files of both projects and sort them by name
+find . -type f | sort
+
+# go to other tmux tile and close it using (Ctrl+B + X)
+
+# ping microprofessors.org site
+ping microprofessors.org
+
+# install ping
+sudo apt install ping
+
+# select iputils-ping
+sudo apt install iputils-ping -y
+
+# ping microprofessors.org site to get the ip address
+ping microprofessors.org
+
+# install ssh
+sudo apt install ssh -y
+
+# connect to microprofessors.org using ip address
+ssh user@<ip.ad.dr.ess>
+
+# out of the Root Project's folder on local mashine
+cd ..
+
+# copy Root Project to remote mashine via ssh
+scp -r root_project/ manlam@microprofessors.org:~
+
+# check if Root Project appeared on the remote mashine
+ls
+
+# verify with tree if Root Project matches on local and remote mashines
+tree
+
+# run program on remote
+./experimental_project/program
+
+# ARM based chip, recompile
+gcc project/src/mlab.c project/src/main_v2.c -o program
+
+# run again on remote
+./program
+
+# run on local to see if the output is the same
+./project/build/program
+
+# logout from the remote mashine
+logout
+
+# exit the environment on local mashine
 exit
